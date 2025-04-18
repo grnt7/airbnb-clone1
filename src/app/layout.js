@@ -1,5 +1,11 @@
+ // Ensure this is the very first line "use client";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "tailwind-scrollbar-hide";
+//import ProgressBar from "@badrap/bar-of-progress";
+//import { useRouter } from "next/navigation"; // Still using useRouter for consistency in a Client Component
+//import { useEffect } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,6 +23,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  
+  
+  
   return (
     <html lang="en">
       <body
@@ -27,3 +36,32 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
+/*
+const router = useRouter();
+  const progress = new ProgressBar({
+    size: 4,
+    color: "#FE595E",
+    className: "z-50",
+    delay: 100,
+  });
+
+  useEffect(() => {
+    const handleRouteStart = () => progress.start();
+    const handleRouteComplete = () => progress.finish();
+    const handleRouteError = () => progress.finish();
+
+    router.events.on("routeChangeStart", handleRouteStart);
+    router.events.on("routeChangeComplete", handleRouteComplete);
+    router.events.on("routeChangeError", handleRouteError);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteStart);
+      router.events.off("routeChangeComplete", handleRouteComplete);
+      router.events.off("routeChangeError", handleRouteError);
+    };
+  }, [router, progress]); // Added progress to the dependency array
+
+
+
+*/

@@ -52,7 +52,7 @@ export default async function Home() {
         </section>
         <section>
           <h2 className="text-4xl font-semibold py-8">Live Anywhere</h2>
-          <div className="flex space-x-3 overflow-auto scrollbar-hide p-3 -m-3">
+          <div className="flex space-x-3 overflow-x-auto scrollbar-hide p-3 -m-3">
           {cardsData.map(({img, title}) => (
             <MediumCard
             key={img} 

@@ -30,7 +30,7 @@ function Footer() {
        
         <div className="space-y-4 text-xs text-gray-800">
         <h5 className="font-bold">SUPPORT</h5>
-        <p>Created by Dg</p>
+        <p>Created by PapaDDog</p>
         <p>Following Papareact</p>
         <p>Airbnb 5 Day Challenge</p>
         <p>Airbnb Plus</p>
