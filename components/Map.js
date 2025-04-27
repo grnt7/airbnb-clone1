@@ -1,4 +1,4 @@
-//"use client"
+"use client"
 
 import { useState, useEffect } from 'react';
 import { Map, Marker, Popup } from 'react-map-gl/mapbox';
