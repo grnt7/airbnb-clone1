@@ -30,15 +30,15 @@ export default async function Home() {
 
   return (
     <div className="">
-      {/* Header */}
+      {/* Header*/ }
       <Header />
-      {/* Banner */}
+      {/* Banner*/ }
       <Banner />
-      {/* Main */}
+      {/* Main*/ }
       <main className="max-w-7xl mx-auto px-8 sm:px-16">
         <section>
           <h2 className="text-4xl font-semibold pb-5 pt-6">Explore Nearby</h2>
-          {/* Pull data from a server */}
+          {/* Pull data from a server*/ }
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {exploreData.map((item) => (
             <SmallCard 

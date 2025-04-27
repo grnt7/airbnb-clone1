@@ -11,11 +11,15 @@
   "dependencies": {
     "@badrap/bar-of-progress": "^0.2.2",
     "@heroicons/react": "^2.2.0",
+    "@vis.gl/react-mapbox": "^8.0.4",
     "date-fns": "^4.1.0",
+    "geolib": "^3.3.4",
+    "mapbox-gl": "^3.11.1",
     "next": "^15.3.0",
     "react": "^19.1.0",
     "react-date-range": "^2.0.1",
     "react-dom": "^19.0.0",
+    "react-map-gl": "^8.0.4",
     "tailwind-scrollbar-hide": "^2.0.0"
   },
   "devDependencies": {
