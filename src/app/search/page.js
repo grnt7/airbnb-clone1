@@ -1,13 +1,11 @@
 // pages/search.js
 "use client";
+
 import { useSearchParams } from 'next/navigation';
-
-import { Suspense } from 'react';
-
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import { format } from "date-fns";
-import { useState, useEffect, Suspense } from 'react'; // Ensure Suspense is here
+import { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import InfoCard from '../../../components/InfoCard';
 import MyMap from '../../../components/Map';
@@ -20,7 +18,7 @@ async function getData() {
   return res.json();
 }
 
-function SearchParamsHandler() {
+function SearchParamsHandler({ onSearchParams }) {
   const searchParams = useSearchParams();
   const location = searchParams.get('location');
   const startDateString = searchParams.get('startDate');
@@ -30,6 +28,11 @@ function SearchParamsHandler() {
   const formattedStartDate = startDateString ? format(new Date(startDateString), "dd MMMM yy") : '';
   const formattedEndDate = endDateString ? format(new Date(endDateString), "dd MMMM yy") : '';
   const range = formattedStartDate && formattedEndDate ? `${formattedStartDate} - ${formattedEndDate}` : '';
+
+  // Pass the formatted values up to the parent component
+  useEffect(() => {
+    onSearchParams({ location, range, noOfGuests });
+  }, [location, range, noOfGuests, onSearchParams]);
 
   return (
     <>
@@ -42,6 +45,7 @@ function SearchParamsHandler() {
 
 export default function Search() {
   const [searchResults, setSearchResults] = useState([]);
+  const [headerPlaceholder, setHeaderPlaceholder] = useState('');
 
   useEffect(() => {
     async function fetchSearchResults() {
@@ -56,16 +60,33 @@ export default function Search() {
     fetchSearchResults();
   }, []);
 
+  const handleSearchParams = ({ location, range, noOfGuests }) => {
+    setHeaderPlaceholder(`${location} | ${range} | ${noOfGuests}`);
+  };
+
   return (
     <div>
-      <Header placeholder={`${useSearchParams().get('location')} | ...`} /> {/* Temporary placeholder */}
+      <Header placeholder={headerPlaceholder} />
       <main className="flex">
         <section className="flex-grow pt-14 px-6">
           <Suspense fallback={<p>Loading search details...</p>}>
-            <SearchParamsHandler />
+            <SearchParamsHandler onSearchParams={handleSearchParams} />
           </Suspense>
           <div className="flex flex-col">
-            {searchResults.map(/* ... */)}
+            {searchResults.map(
+              ({ img, location, title, description, star, price, total }) => (
+                <InfoCard
+                  key={img}
+                  img={img}
+                  location={location}
+                  title={title}
+                  description={description}
+                  star={star}
+                  price={price}
+                  total={total}
+                />
+              )
+            )}
           </div>
         </section>
         <section className="hidden xl:inline-flex xl:min-w-[600px]">
@@ -76,6 +97,7 @@ export default function Search() {
     </div>
   );
 }
+
 
 /*
 import { useSearchParams } from 'next/navigation';
