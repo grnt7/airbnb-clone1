@@ -1,7 +1,17 @@
 // pages/search.js
 "use client";
 import { useSearchParams } from 'next/navigation';
+
 import { Suspense } from 'react';
+
+import Header from '../../../components/Header';
+import Footer from '../../../components/Footer';
+import { format } from "date-fns";
+import { useState, useEffect, Suspense } from 'react'; // Ensure Suspense is here
+import Image from 'next/image';
+import InfoCard from '../../../components/InfoCard';
+import MyMap from '../../../components/Map';
+
 function SearchParamsDisplay() {
   const searchParams = useSearchParams();
   const query = searchParams.get('query');
@@ -13,6 +23,7 @@ export default function Search() {
     <div>
       <h1>Minimal Search Page</h1>
       <Suspense fallback={<p>Loading query...</p>}>
+     
         <SearchParamsDisplay />
       </Suspense>
     </div>
