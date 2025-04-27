@@ -20,6 +20,22 @@ async function getData() {
   return res.json();
 }
 
+export default function Search() {
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    async function fetchSearchResults() {
+      try {
+        const data = await getData();
+        setSearchResults(data);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+      }
+    }
+
+    fetchSearchResults();
+  }, []);
+
 function SearchParamsDisplay() {
   const searchParams = useSearchParams();
   const query = searchParams.get('query');
