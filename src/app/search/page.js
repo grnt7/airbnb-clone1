@@ -12,6 +12,14 @@ import Image from 'next/image';
 import InfoCard from '../../../components/InfoCard';
 import MyMap from '../../../components/Map';
 
+async function getData() {
+  const res = await fetch("/api/search-data");
+  if (!res.ok) {
+    throw new Error(`Failed to fetch search results: ${res.status}`);
+  }
+  return res.json();
+}
+
 function SearchParamsDisplay() {
   const searchParams = useSearchParams();
   const query = searchParams.get('query');
