@@ -1,6 +1,25 @@
 // pages/search.js
 "use client";
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+function SearchParamsDisplay() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query');
+  return <p>Query: {query || 'No query'}</p>;
+}
 
+export default function Search() {
+  return (
+    <div>
+      <h1>Minimal Search Page</h1>
+      <Suspense fallback={<p>Loading query...</p>}>
+        <SearchParamsDisplay />
+      </Suspense>
+    </div>
+  );
+}
+
+/*
 import { useSearchParams } from 'next/navigation';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
@@ -52,8 +71,9 @@ export default function Search() {
   console.log("Search Results:", searchResults);
 
   return (
-    
-    <Suspense fallback={<p>Loading search results...</p>}> {/* Wrap the entire content */}
+    /*
+    /*
+    <Suspense fallback={<p>Loading search results...</p>}> {/* Wrap the entire content }
     <div>
       <Header placeholder={`${location} | ${range} | ${noOfGuests}`} />
       <main className="flex">
@@ -93,6 +113,7 @@ export default function Search() {
   </Suspense>
 );
 }
+*/
 // Remove getServerSideProps as it's not used in the app router
 // export async function getServerSideProps(context) {
 //   // ...
