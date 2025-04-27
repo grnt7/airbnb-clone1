@@ -20,6 +20,26 @@ async function getData() {
   return res.json();
 }
 
+function SearchParamsHandler() {
+  const searchParams = useSearchParams();
+  const location = searchParams.get('location');
+  const startDateString = searchParams.get('startDate');
+  const endDateString = searchParams.get('endDate');
+  const noOfGuests = searchParams.get('noOfGuests');
+
+  const formattedStartDate = startDateString ? format(new Date(startDateString), "dd MMMM yy") : '';
+  const formattedEndDate = endDateString ? format(new Date(endDateString), "dd MMMM yy") : '';
+  const range = formattedStartDate && formattedEndDate ? `${formattedStartDate} - ${formattedEndDate}` : '';
+
+  return (
+    <>
+      <p className="text-xs">300+ Stays -{range}- for {noOfGuests} guests</p>
+      <h1 className="text-3xl font-semi-bold mt-2 mb-6">Stays in {location}</h1>
+      {/* Add other elements that depend on searchParams here if needed */}
+    </>
+  );
+}
+
 export default function Search() {
   const [searchResults, setSearchResults] = useState([]);
 
@@ -36,20 +56,23 @@ export default function Search() {
     fetchSearchResults();
   }, []);
 
-function SearchParamsDisplay() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get('query');
-  return <p>Query: {query || 'No query'}</p>;
-}
-
-export default function Search() {
   return (
     <div>
-      <h1>Minimal Search Page</h1>
-      <Suspense fallback={<p>Loading query...</p>}>
-     
-        <SearchParamsDisplay />
-      </Suspense>
+      <Header placeholder={`${useSearchParams().get('location')} | ...`} /> {/* Temporary placeholder */}
+      <main className="flex">
+        <section className="flex-grow pt-14 px-6">
+          <Suspense fallback={<p>Loading search details...</p>}>
+            <SearchParamsHandler />
+          </Suspense>
+          <div className="flex flex-col">
+            {searchResults.map(/* ... */)}
+          </div>
+        </section>
+        <section className="hidden xl:inline-flex xl:min-w-[600px]">
+          <MyMap searchResults={searchResults} />
+        </section>
+      </main>
+      <Footer />
     </div>
   );
 }
