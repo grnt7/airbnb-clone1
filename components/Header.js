@@ -70,24 +70,24 @@ function Header({placeholder}) {
         </div>
       </div>
       {searchInput && (
-        <div className="flex flex-col col-span-3 mx-auto mt-10">
-          <DateRangePicker
-            ranges={[selectionRange]}
-            mindate={new Date()}
-            rangeColors={["#FD5B61"]}
-            onChange={handleSelect}
-          />
-          <div className='flex items-center border-b mb-4'>
-            <h2 className="text-2xl flex-grow font-semibold">Number of Guests</h2>
-            <UsersIcon className="h-5" />
-            <input
-              value={noOfGuests}
-              onChange={(e) => setNoOfGuests(parseInt(e.target.value) >= 1 ? parseInt(e.target.value) : 1)}
-              type="number"
-              min={1}
-              className="w-12 pl-2 text-lg outline-none text-red-400" />
-          </div>
-          <div className='flex'>
+           <div className="flex flex-col col-span-3 mx-auto mt-10">
+           <DateRangePicker
+             ranges={[selectionRange]}
+             mindate={new Date()}
+             rangeColors={["#FD5B61"]}
+             onChange={handleSelect}
+           />
+           <div className='flex items-center border-b mb-4 w-full '>
+             <h2 className="text-2xl flex-grow font-semibold">Number of Guests</h2>
+             <UsersIcon className="h-5" />
+             <input
+               value={noOfGuests}
+               onChange={(e) => setNoOfGuests(parseInt(e.target.value) >= 1 ? parseInt(e.target.value) : 1)}
+               type="number"
+               min={1}
+               className="w-12 pl-2 text-lg outline-none text-red-400" />
+           </div>
+           <div className='flex space-x-2'>
             <button onClick={resetInput} className='flex-grow text-gray-500'>Cancel</button>
             <button onClick={() => search(searchInput, startDate, endDate, noOfGuests)} className='flex-grow text-red-400'>Search</button>
           </div>
@@ -102,6 +102,10 @@ export default Header;
 
 
 /*
+flex flex-col col-span-3 mx-auto mt-10
+fixed top-0 left-0 z-50 bg-white w-full h-screen flex flex-col items-center justify-start p-6 md:relative md:h-auto md:w-auto md:left-auto md:top-auto md:bg-transparent md:p-0 md:col-span-3 md:mx-auto md:mt-10
+
+
 if (typeof searchInput !== 'string') {
         console.error("searchInput is not a string:", searchInput);
         return; // Prevent router.push if searchInput is invalid
