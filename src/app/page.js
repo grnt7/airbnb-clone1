@@ -24,8 +24,31 @@ async function getCardsData() {
 }
 
 export default async function Home() {
-  const exploreData = await getData();
+ // --- FIX IS HERE: Changed 'const' to 'let' for exploreData ---
+  let exploreData = await getData(); // Use 'let' because we'll reassign it later
+
   const cardsData = await getCardsData(); // Place the new fetch here
+
+  // --- NEW CODE STARTS HERE ---
+
+  // Define your local image paths (assuming they are in public/images/)
+  const localImageMap = {
+    "https://links.papareact.com/2k3": "/Images/CardiffRetro.jpg", // Replace with your actual downloaded image path
+    "https://links.papareact.com/40m": "/Images/LiverpoolRetro.jpg", // Replace with your actual downloaded image path
+    // Add more mappings here if other papareact.com images break
+    "https://links.papareact.com/hz2": "/images/AirbnbCheap2.jpg", // <-- ADD THIS NEW ENTRY
+    "https://links.papareact.com/qd3": "/Images/AirbnbCheap2.jpg", 
+  };
+
+  // Transform exploreData to use local paths where applicable
+  exploreData = exploreData.map(item => {
+    if (localImageMap[item.img]) {
+      return { ...item, img: localImageMap[item.img] };
+    }
+    return item; // Return original item if no replacement is needed
+  });
+
+  // --- NEW CODE ENDS HERE ---
   
 
   return (

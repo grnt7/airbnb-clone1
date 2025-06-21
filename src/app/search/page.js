@@ -89,7 +89,7 @@ export default function Search() {
           </div>
         </section>
          {/* Map for mobile and tablet (initially hidden on larger) */}
-      <section className="flex-flex-col xl:inline-flex xl:min-w-[600px]">
+      <section className="flex-flex-col xl:inline-flex xl:min-w-[600px] h-100vh">
         <MyMap searchResults={searchResults} />
       </section>
 

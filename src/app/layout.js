@@ -37,31 +37,3 @@ export default function RootLayout({ children }) {
   );
 }
 
-/*
-const router = useRouter();
-  const progress = new ProgressBar({
-    size: 4,
-    color: "#FE595E",
-    className: "z-50",
-    delay: 100,
-  });
-
-  useEffect(() => {
-    const handleRouteStart = () => progress.start();
-    const handleRouteComplete = () => progress.finish();
-    const handleRouteError = () => progress.finish();
-
-    router.events.on("routeChangeStart", handleRouteStart);
-    router.events.on("routeChangeComplete", handleRouteComplete);
-    router.events.on("routeChangeError", handleRouteError);
-
-    return () => {
-      router.events.off("routeChangeStart", handleRouteStart);
-      router.events.off("routeChangeComplete", handleRouteComplete);
-      router.events.off("routeChangeError", handleRouteError);
-    };
-  }, [router, progress]); // Added progress to the dependency array
-
-
-
-*/

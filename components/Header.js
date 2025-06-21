@@ -88,13 +88,13 @@ function Header({placeholder}) {
                className="w-12 pl-2 text-lg outline-none text-red-400" />
            </div>
            <div className='flex space-x-2'>
-            <button onClick={resetInput} className='flex-grow text-gray-500'>Cancel</button>
-            <button onClick={() => search(searchInput, startDate, endDate, noOfGuests)} className='flex-grow text-red-400'>Search</button>
+            <button onClick={resetInput} className='flex-grow text-gray-500 cursor-pointer'>Cancel</button>
+            <button onClick={() => search(searchInput, startDate, endDate, noOfGuests)} className='flex-grow text-red-400 cursor-pointer'>Search</button>
           </div>
         </div>
       )}
     </header>
-  );
+  ); 
 }
 
 export default Header;
