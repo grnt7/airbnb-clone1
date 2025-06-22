@@ -35,6 +35,7 @@ export default async function Home() {
   const localImageMap = {
     "https://links.papareact.com/2k3": "/images/CardiffRetro.jpg", // Replace with your actual downloaded image path
     "https://links.papareact.com/40m": "/images/LiverpoolRetro.jpg", // Replace with your actual downloaded image path
+    "https://links.papareact.com/1to": "/images/Manchester-city.jpg", // Replace with your actual downloaded image path
     // Add more mappings here if other papareact.com images break
     "https://links.papareact.com/hz2": "/images/AirbnbCheap2.jpg", // <-- ADD THIS NEW ENTRY
     "https://links.papareact.com/qd3": "/images/AirbnbCheap2.jpg", 
