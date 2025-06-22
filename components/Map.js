@@ -14,7 +14,7 @@ const areCoordinatesRoughlyEqual = (loc1, loc2, tolerance = 0.000001) => {
          Math.abs(loc1.long - loc2.long) < tolerance;
 };
 
-function MyMap({ searchResults }) {
+function MyMap({ searchResults, className }) {
   const [viewState, setViewState] = useState({
     latitude: 51.494720,
     longitude: -0.12571990,
@@ -54,7 +54,8 @@ function MyMap({ searchResults }) {
       {...viewState}
       onMove={evt => setViewState(evt.viewState)}
       // Add height to ReactMapGL or ensure parent div has it via CSS
-      style={{ width: '100%', height: '100vh' }} // Example of setting height directly
+      //style={{ width: '100%', height: '100vh' }} // Example of setting height directly
+      className={className} 
     >
       {searchResults.map((result) => (
         // Key for the wrapper div around Marker and Popup
