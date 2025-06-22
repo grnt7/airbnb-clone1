@@ -1,12 +1,13 @@
-"use client" // This is important for Next.js to treat it as a client component
+"use client"
 
-import { useState, useEffect, useRef } from 'react'; // Added useRef for potential map instance access
+import { useState, useEffect, useRef } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl/mapbox';
-import 'mapbox-gl/dist/mapbox-gl.css'; // Essential Mapbox GL styles
+import 'mapbox-gl/dist/mapbox-gl.css'; // Make sure this CSS import is present and active
+
+// Ensure getCenter is imported if you're using it in useEffect
 import getCenter from "geolib/es/getCenter";
-// Helper function for robust coordinate comparison
-// Moved inside the component or a dedicated utils file if you prefer,
-// but for clarity in this single file, let's keep it here.
+
+// This helper function must be defined outside the component for accessibility and performance
 const areCoordinatesRoughlyEqual = (loc1, loc2, tolerance = 0.000001) => {
   if (!loc1 || !loc2) return false;
   return Math.abs(loc1.lat - loc2.lat) < tolerance &&
@@ -14,38 +15,28 @@ const areCoordinatesRoughlyEqual = (loc1, loc2, tolerance = 0.000001) => {
 };
 
 function MyMap({ searchResults }) {
-  // State for map viewport (viewState is the more common prop name in ReactMapGL)
   const [viewState, setViewState] = useState({
-    latitude: 51.494720, // Default: London (ensure this is a number, not a string)
-    longitude: -0.12571990, // Ensure this is a number
+    latitude: 51.494720,
+    longitude: -0.12571990,
     zoom: 11,
   });
 
-  // State to hold the currently selected location for the popup
-  // Initialized to null, meaning no location is selected.
   const [selectedLocation, setSelectedLocation] = useState(null);
 
-  // You need to set the map's height using CSS, not directly in viewState.
-  // The 'height' prop of ReactMapGL expects a string (e.g., "100vh", "500px").
-  // It was in your viewport state, which is unconventional for ReactMapGL's `height` prop.
-  // Let's pass it separately or ensure your container div has the height.
-  // For this example, let's assume the parent container has height or set it inline for the map.
-
-  // Using a ref to potentially get the map instance for advanced control if needed later
-  const mapRef = useRef(null);
-
-  // If you want the map to automatically center on the search results:
+  // --- DEBUGGING LOG: Monitor selectedLocation changes ---
   useEffect(() => {
-    if (searchResults.length > 0) {
-      // getCenter from geolib/es/getCenter needs an array of {latitude, longitude} objects
+    console.log("selectedLocation changed to:", selectedLocation);
+  }, [selectedLocation]);
+  // --- END DEBUGGING LOG ---
+
+  // Optional: Center map on search results
+  useEffect(() => {
+    if (searchResults && searchResults.length > 0) {
       const coordinates = searchResults.map(result => ({
         latitude: result.lat,
         longitude: result.long,
       }));
-
-      // Only calculate center if there are valid coordinates
       const center = getCenter(coordinates);
-
       if (center) {
         setViewState(prev => ({
           ...prev,
@@ -54,102 +45,119 @@ function MyMap({ searchResults }) {
         }));
       }
     }
-  }, [searchResults]); // Recalculate center when searchResults change
-
+  }, [searchResults]);
 
   return (
-    // Set map height explicitly here or via CSS for the parent div
     <ReactMapGL
-      ref={mapRef} // Attach ref if needed
       mapboxAccessToken={process.env.NEXT_PUBLIC_mapbox_key}
-      mapStyle="mapbox://styles/skylabblazar/cm9sj2qo300ba01s01f40d2w3"
-      {...viewState} // Spread the viewState
-      onMove={evt => setViewState(evt.viewState)} // Correct way to update viewState on user interaction
-      // You can also add other props like `style={{ width: '100%', height: '100%' }}`
-      // to the ReactMapGL component or ensure its parent container handles height.
-      // Assuming a parent div handles 100vh for now.
+      mapStyle="mapbox://styles/skylabblazar/cm9sj2qo300ba01s01f40d2w3" // Using a standard style for troubleshooting
+      {...viewState}
+      onMove={evt => setViewState(evt.viewState)}
+      // Add height to ReactMapGL or ensure parent div has it via CSS
+      style={{ width: '100%', height: '100vh' }} // Example of setting height directly
     >
-
       {searchResults.map((result) => (
-        // Key for the outer div wrapping Marker and Popup for better React reconciliation
+        // Key for the wrapper div around Marker and Popup
         <div key={`location-${result.long}-${result.lat}`}>
           <Marker
             key={`marker-${result.long}-${result.lat}`}
             latitude={result.lat}
             longitude={result.long}
-            // offsetLeft/Top are for the marker's visual icon, adjust if your pin image has a different anchor point
-            offsetLeft={-20} // Center of a 40px wide icon
-            offsetTop={-30} // Bottom of a 60px tall icon (adjust based on your pin icon's actual size)
+            offsetLeft={-20}
+            offsetTop={-30}
           >
-            {/* Using a button or div for clickability is often better than <p> */}
             <button
               onClick={() => {
-                console.log("Clicked Marker Data:", result); // Keep for debugging
+                console.log("--- MARKER CLICKED ---");
+                console.log("Clicked Result to set (full object):", result);
                 setSelectedLocation(result);
                 // Optionally, fly to the selected location
                 setViewState(prev => ({
                   ...prev,
                   latitude: result.lat,
                   longitude: result.long,
-                  zoom: 13, // Zoom in a bit when selected
+                  zoom: 13,
                 }));
               }}
               className="cursor-pointer text-2xl animate-bounce"
               aria-label={`Show details for ${result.title}`}
-              style={{ background: 'none', border: 'none', padding: 0 }} // Remove default button styles
+              style={{ background: 'none', border: 'none', padding: 0 }}
             >
-              📌 {/* Your pin icon */}
+              📌
             </button>
           </Marker>
 
-          
-          {selectedLocation && areCoordinatesRoughlyEqual(selectedLocation, result) ? (
-  <Popup
-    key={`popup-${result.long}-${result.lat}`}
-    latitude={result.lat}
-    longitude={result.long}
-    anchor="bottom"
-    onClose={() => setSelectedLocation(null)}
-    closeOnClick={true}
-    style={{
-      zIndex: 9999,
-      backgroundColor: 'white', // Clean white background
-      padding: '10px',
-      borderRadius: '8px', // Rounded corners
-      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)', // Subtle shadow
-      border: '1px solid #ddd', // Light border
-    }}
-  >
-    <div style={{ maxWidth: '250px' }}> {/* Limit popup width */}
-      {result.img && (
-        <img
-          src={result.img}
-          alt={result.title}
-          style={{
-            width: '100%',
-            maxHeight: '150px', // Limit image height
-            objectFit: 'cover', // Maintain aspect ratio
-            borderRadius: '8px 8px 0 0', // Rounded corners on top
-            marginBottom: '8px',
-          }}
-        />
-      )}
-      <div style={{ padding: '8px' }}>
-        <h3 style={{ margin: '0 0 5px 0', fontSize: '1.2em', fontWeight: 'bold' }}>
-          {result.title}
-        </h3>
-        <p style={{ margin: '0 0 5px 0', fontSize: '0.9em', color: '#666' }}>
-          {result.location}
-        </p>
-        <p style={{ margin: '0', fontSize: '1em', fontWeight: 'bold', color: '#007bff' }}>
-          {result.price}
-        </p>
-      </div>
-    </div>
-  </Popup>
-) : (
-  false
-)}
+          {/* Conditional rendering for the Popup */}
+          {(() => { // Using an IIFE to contain the logic and console.log
+            const isCurrentlySelected = selectedLocation && areCoordinatesRoughlyEqual(selectedLocation, result);
+
+            // --- CRITICAL DEBUG LOG ---
+            if (selectedLocation) { // Only log if something is selected to avoid console spam
+              console.groupCollapsed(`Popup Check for: ${result.title}`);
+              console.log("selectedLocation (current state):", selectedLocation);
+              console.log("result (current loop item):", result);
+              console.log(`  Selected Lat: ${selectedLocation.lat}, Long: ${selectedLocation.long}`);
+              console.log(`  Current Loop Lat: ${result.lat}, Long: ${result.long}`);
+              console.log(`  Abs Diff Lat: ${Math.abs(selectedLocation.lat - result.lat)}`);
+              console.log(`  Abs Diff Long: ${Math.abs(selectedLocation.long - result.long)}`);
+              console.log(`  Using tolerance: ${0.000001}`);
+              console.log(`  ARE COORDS EQUAL (Helper Function Result): ${isCurrentlySelected}`); // This is the boolean result
+              console.groupEnd();
+            }
+            // --- END CRITICAL DEBUG LOG ---
+
+            return isCurrentlySelected ? (
+              <Popup
+                key={`popup-${result.long}-${result.lat}`} // Unique key for the Popup
+                latitude={result.lat}
+                longitude={result.long}
+                anchor="bottom"
+                onClose={() => {
+                  console.log("--- POPUP ONCLOSE TRIGGERED ---"); // Log when it closes
+                  setSelectedLocation(null);
+                  setViewState(prev => ({ ...prev, zoom: 11 })); // Zoom out when closed
+                }}
+                closeOnClick={false}
+                style={{
+                  zIndex: 9999, // High z-index to ensure visibility
+                  backgroundColor: 'white',
+                  padding: '10px',
+                  borderRadius: '8px',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)',
+                  border: '1px solid #ddd',
+                }}
+              >
+                <div style={{ maxWidth: '250px', color: 'black' }}> {/* Ensure text color is black */}
+                  {result.img && (
+                    <img
+                      src={result.img}
+                      alt={result.title}
+                      style={{
+                        width: '100%',
+                        maxHeight: '150px',
+                        objectFit: 'cover',
+                        borderRadius: '8px 8px 0 0',
+                        marginBottom: '8px',
+                      }}
+                    />
+                  )}
+                  <div style={{ padding: '8px' }}>
+                    <h3 style={{ margin: '0 0 5px 0', fontSize: '1.2em', fontWeight: 'bold' }}>
+                      {result.title}
+                    </h3>
+                    <p style={{ margin: '0 0 5px 0', fontSize: '0.9em', color: '#666' }}>
+                      {result.location}
+                    </p>
+                    <p style={{ margin: '0', fontSize: '1em', fontWeight: 'bold', color: '#007bff' }}>
+                      {result.price}
+                    </p>
+                  </div>
+                </div>
+              </Popup>
+            ) : (
+              false // Render nothing if not selected
+            );
+          })()}
         </div>
       ))}
     </ReactMapGL>
@@ -164,3 +172,5 @@ export default MyMap;
     </Marker> 
 */
 
+/*mapbox://styles/skylabblazar/cm9sj2qo300ba01s01f40d2w3*/ 
+/*mapbox://styles/mapbox/streets-v11*/ //standard styles
