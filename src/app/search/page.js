@@ -54,7 +54,7 @@ export default function Search() {
     async function fetchSearchResults() {
       if (searchParamsClient) {
         try {
-          // ENSURE YOUR API PATH IS CORRECT AND DOESN'T HAVE TYPOS LIKE 'math-inline'
+          
           const res = await fetch(`/api/search-data?location=${searchParamsClient.get('location')}&startDate=${searchParamsClient.get('startDate')}&endDate=${searchParamsClient.get('endDate')}&noOfGuests=${searchParamsClient.get('noOfGuests')}`);
           if (!res.ok) {
             throw new Error(`Failed to fetch search results: ${res.status}`);
@@ -101,9 +101,9 @@ export default function Search() {
         </section>
 
         {/* This is the right/bottom map section */}
-        <section className="w-full h-96 md:h-screen md:w-1/2 md:order-2 relative"> {/* Mobile: full width, h-96. MD+: 1/2 width, full screen height, order 2 */}
-          {/* Now, pass the className to MyMap. MyMap will apply it to ReactMapGL */}
-          <MyMap className="w-full h-full" searchResults={searchResults} /> {/* MyMap will fill this section */}
+       <section className="map-container relative"> {/* `relative` is good to keep for popups */}
+          {/* MyMap now takes w-full h-full of its parent map-container */}
+          <MyMap className="w-full h-full" searchResults={searchResults} /> 
         </section>
 
       </main>
