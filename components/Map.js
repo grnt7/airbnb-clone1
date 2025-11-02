@@ -318,13 +318,13 @@ function MyMap({ searchResults }) {
                   <div className="text-black p-1 space-y-2">
                     
                     {/* Image Display */}
-                    <div className="relative w-full h-16">
+                    <div className="relative w-full h-30">
                       <Image
                         src={result.img} 
                         alt={result.title}
                         fill
-                        className="object-cover rounded-t-lg"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover rounded-lg"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
                       />
                     </div>
                     
