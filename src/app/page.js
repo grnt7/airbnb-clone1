@@ -5,27 +5,29 @@ import SmallCard from "../../components/SmallCard";
 import MediumCard from "../../components/MediumCard";
 import LargeCard from "../../components/LargeCard";
 import Footer from "../../components/Footer";
-async function getData() {
-  const res = await fetch("https://www.jsonkeeper.com/b/4G1G");
+import { exploreData as localExploreData, cardsData as localCardsData } from '../../public/data/exploreData';
+// async function getData() {
+//   const res = await fetch("https://www.jsonkeeper.com/b/4G1G");
 
-  // Handle potential errors
-  if (!res.ok) {
-    throw new Error(`Failed to fetch data: ${res.status}`);
-  }
-  return res.json();
-}
+//   // Handle potential errors
+//   if (!res.ok) {
+//     throw new Error(`Failed to fetch data: ${res.status}`);
+//   }
+//   return res.json();
+// }
 
-async function getCardsData() {
-  const res = await fetch("https://www.jsonkeeper.com/b/VHHT");
-  if (!res.ok) {
-    throw new Error(`Failed to fetch cards data: ${res.status}`);
-  }
-  return res.json();
-}
+// async function getCardsData() {
+//   const res = await fetch("https://www.jsonkeeper.com/b/VHHT");
+//   if (!res.ok) {
+//     throw new Error(`Failed to fetch cards data: ${res.status}`);
+//   }
+//   return res.json();
+// }
 
-export default async function Home() {
-  const exploreData = await getData();
-  const cardsData = await getCardsData(); // Place the new fetch here
+export default function Home() {
+  
+  const exploreData = localExploreData;
+  const cardsData = localCardsData; // Place the new fetch here
   
 
   return (
@@ -70,7 +72,8 @@ export default async function Home() {
         
         </section>
         <LargeCard
-        img="https://links.papareact.com/4cj"
+        // 
+        img="/images/Wishlists.webp"
         title="The Greatest Outdoors"
         description="Wishlists curated by Airbnb."
         buttonText="Get inspired"

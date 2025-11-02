@@ -20,7 +20,7 @@ const nextConfig = {
     ],
   },
   env: {
-    NEXT_PUBLIC_mapbox_key: "pk.eyJ1Ijoic2t5bGFiYmxhemFyIiwiYSI6ImNtOXo5bTM1ZzFlc3gycXNtaGM4eTNuOG4ifQ.JYIiRVvR5m1bpKiAcqLoZw" // Add the NEXT_PUBLIC_ prefix
+    NEXT_PUBLIC_mapbox_key: "pk.eyJ1Ijoic2t5bGFiYmxhemFyIiwiYSI6ImNtaGhuNnJkYTByNzIya3F0MTNkaHBudjYifQ.Oz3t6y-FvT7sTQkeDY2lFw" // Add the NEXT_PUBLIC_ prefix
   }
   
 };

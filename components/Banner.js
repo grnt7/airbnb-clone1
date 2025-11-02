@@ -6,7 +6,8 @@ function Banner() {
     <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] xl:h-[600px] 2xl;h-[700px]">
       <Image
       
-      src="https://links.papareact.com/0fm"
+      // src="https://links.papareact.com/0fm"
+      src="/images/Banner.webp"
       layout="fill"
       objectFit="cover"
       alt="Banner Image"

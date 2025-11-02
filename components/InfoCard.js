@@ -36,4 +36,4 @@ function InfoCard({img, location, title, description, star, price, total}) {
   )
 }
 
-export default InfoCard
+export default InfoCard;
