@@ -4,42 +4,42 @@
 // The base path (public) is automatically handled by Next.js.
 export const exploreData = [
     {
-        img: "/images/London.webp", 
+        img: "/images/explore/London.webp", 
         location: "London",
         distance: "45-minute drive"
     },
     {
-        img: "/images/Manchester-city.webp", 
+        img: "/images/explore/Manchester-city.webp", 
         location: "Manchester",
         distance: "4.5 hour drive"
     },
     {
-        img: "/images/LiverpoolRetro.webp", 
+        img: "/images/explore/LiverpoolRetro.webp", 
         location: "Liverpool",
         distance: "4-hour drive"
     },
      {
-        img: "/images/Birkenhead.webp", 
+        img: "/images/explore/Birkenhead.webp", 
         location: "Birkenhead",
         distance: "4-hour drive"
     },
      {
-        img: "/images/Newquay.webp", 
+        img: "/images/explore/Newquay.webp", 
         location: "Newquay",
         distance: "4-hour drive"
     },
     {
-        img: "/images/CardiffRetro.webp", 
+        img: "/images/explore/CardiffRetro.webp", 
         location: "Cardiff",
         distance: "4-hour drive"
     },
     {
-        img: "/images/Hove.webp", 
+        img: "/images/explore/Hove.webp", 
         location: "Hove",
         distance: "4-hour drive"
     },
     {
-        img: "/images/York.webp", 
+        img: "/images/explore/York.webp", 
         location: "York",
         distance: "4-hour drive"
     },
@@ -48,19 +48,19 @@ export const exploreData = [
 
 export const cardsData = [
     {
-        img: "/images/Unique_stays.webp", 
+        img: "/images/live_anywhere/Unique_stays.webp", 
         title: "Unique stays"
     },
     {
-        img: "/images/Outdoor_getaways.webp", 
+        img: "/images/live_anywhere/Outdoor_getaways.webp", 
         title: "Outdoor getaways"
     },
     {
-        img: "/images/Entire_homes.webp", 
+        img: "/images/live_anywhere/Entire_homes.webp", 
         title: "Entire homes"
     },
     {
-        img: "/images/Pet_friendly.webp", 
+        img: "/images/live_anywhere/Pet_friendly.webp", 
         title: "Pet friendly"
     },
     // ... add all your MediumCard data here, pointing to local files
