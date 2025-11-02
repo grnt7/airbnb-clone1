@@ -2,7 +2,7 @@
 export const dynamicContent = [
     // EXAMPLE STRUCTURE: You need to replace this with the actual data structure
    {
-    "img": "/images/stays/Cheap_Room1.avif",
+    "img": "/images/stays/cheap_Room1.avif",
      "location": "Private room in center of London",
       "title": "Stay at this spacious Edwardian House",
       "description": "1 guest · 1 bedroom · 1 bed · 1.5 shared bthrooms · Wifi · Kitchen · Free parking · Washing Machine",
