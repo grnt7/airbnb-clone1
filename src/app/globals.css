@@ -18,4 +18,66 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Base styles for all screen sizes (Mobile-first approach) */
+.search-page-layout {
+  display: flex;
+  flex-direction: column; /* Stack content and map vertically by default */
+  min-height: 100vh; /* Ensure the layout takes at least the full viewport height */
+}
 
+.search-content {
+  flex: 1; /* Allow content to grow and take available space */
+  overflow-y: auto; /* Make content area scrollable if it exceeds screen height */
+  padding: 1rem; /* Add some padding around your content */
+  /* order: 1; implicitly on mobile, so it appears first */
+}
+
+.map-container {
+  /* On small screens, the map is at the bottom, taking full width */
+  width: 100%;
+  height: 100vh; /* Map takes 50% of the viewport height on small screens */
+  /* order: 2; implicitly on mobile, so it appears after content */
+  position: relative; /* Important for Mapbox GL JS if using popups/markers */
+}
+
+/*
+   Important: Ensure your MyMap component's internal map element
+   (which is rendered by react-map-gl as a div with class 'mapboxgl-map')
+   fills its container.
+*/
+.map-container .mapboxgl-map {
+  width: 100% !important; /* Override inline styles if necessary */
+  height: 100% !important; /* Override inline styles if necessary */
+}
+
+/* --- Media query for Tablets and larger devices (e.g., min-width: 768px) --- */
+@media (min-width: 768px) {
+  .search-page-layout {
+    flex-direction: row; /* Arrange content and map side-by-side */
+  }
+
+  .search-content {
+    width: 50%; /* Content takes half width */
+    flex: none; /* Reset flex-grow from mobile */
+    order: 1; /* Explicitly place content on the left side */
+  }
+
+  .map-container {
+    width: 50%; /* Map takes half width */
+    height: 100vh; /* Map takes full viewport height on larger screens */
+    order: 2; /* Explicitly place map on the right side */
+  }
+}
+
+/* You can add another breakpoint for even larger desktops if needed */
+@media (min-width: 1024px) {
+  /* Example: adjust widths for wider screens */
+    .search-content {
+    width: 40%;
+  }
+  .map-container {
+       min-height: 100% !important; /* Change from min-height and ADD !important HERE */
+    width: 60%;
+  }
+  
+}

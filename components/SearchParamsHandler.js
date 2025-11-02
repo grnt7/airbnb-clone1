@@ -9,6 +9,19 @@ import Image from 'next/image';
 import InfoCard from '../../../components/InfoCard';
 import MyMap from '../../../components/Map';
 
+
+// Define your local image map here, within the scope of this client component
+// or import it from a shared constants file if you have one.
+const localImageMap = {
+  // Assuming these are the ones that load OK in your browser
+  "https://links.papareact.com/qd3": "/images/papareact-qd3.jpg",
+  "https://links.papareact.com/xhc": "/images/papareact-xhc.jpg",
+  // This is the one that causes DNS error, so use your alternative:
+  "https://links.papareact.com/hz2": "/images/AirbnbCheap2.jpg", // Ensure correct path and case
+  // Add other mappings if any other papareact.com images appear here
+};
+
+
 async function getData() {
   const res = await fetch("/api/search-data");
   if (!res.ok) {
@@ -54,6 +67,14 @@ export default function Search() {
     async function fetchSearchResults() {
       try {
         const data = await getData();
+         // Apply the mapping to the fetched data before setting state
+        const mappedData = data.map(item => {
+          if (localImageMap[item.img]) {
+            return { ...item, img: localImageMap[item.img] };
+          }
+          return item; // Return original item if no replacement is needed
+        });
+        setSearchResults(mappedData); // Set the mapped data
         setSearchResults(data);
       } catch (error) {
         console.error("Error fetching search results:", error);
