@@ -31,6 +31,8 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 Airbnb Clone built with Next.js, Tailwind CSS, Calendar Picker, ✨ (Optional: Include a captivating screenshot or GIF of your project in action here. It's often the first thing people look at!)
 
+Disclaimer:** Built purely for demonstration of React/Next.js skills; zero affiliation with the original brand."
+
 A concise and compelling description of your project. What is its core purpose? What problem does it solve? What makes it unique or interesting?
 The Airbnb Clone is a comprehensive frontend application that mimics the core user experience of the popular lodging marketplace. Its main purpose is to showcase advanced frontend development skills by building a dynamic, feature-rich web interface.
 
